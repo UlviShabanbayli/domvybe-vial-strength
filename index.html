@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#232524">
+<title>Verdance · Create your account</title>
+<meta name="description" content="Make it strong. Watch it fill. A password-strength meter as a glass vial: the liquid rises and shifts from ruby to emerald as your password gets stronger.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/vial.css">
+<script>
+  // storage: versioned keys only (dv93.*); anything older is wiped. Passwords are never stored. The page's theme is its
+  // own (dark) and never follows the OS.
+  try {
+    for (let i = localStorage.length - 1; i >= 0; i--) { const k = localStorage.key(i); if (k && /^dv93/.test(k) && k !== 'dv93.v1.seen') localStorage.removeItem(k); }
+  } catch (e) {}
+  if (/[?&]nofx\b/.test(location.search)) document.documentElement.classList.add('no-fx');
+</script>
+</head>
+<body>
+<a class="skip" href="#pw">Skip to password</a>
+
+<header class="top">
+  <a class="logo" href="#" aria-label="Verdance home"><i aria-hidden="true"></i>Verdance</a>
+  <nav aria-label="Main"><a href="#">Product</a><a href="#">Security</a><a href="#">Pricing</a></nav>
+  <a class="login" href="#">Log in</a>
+</header>
+
+<main class="hero" id="hero">
+  <canvas class="bgfx" id="bgfx" aria-hidden="true"></canvas>
+  <div class="cvbg" aria-hidden="true"></div>
+  <canvas class="fx" id="fx" aria-hidden="true"></canvas>
+  <div class="cv" id="cv" aria-hidden="true"><i class="cv-liquid" id="cv-liquid"></i><i class="cv-glass"></i><i class="cv-ticks"></i><i class="cv-cap"></i></div>
+  <div class="vig" aria-hidden="true"></div>
+  <div class="grads" id="grads" aria-hidden="true"><span data-m="0">Weak</span><span data-m="1">Fair</span><span data-m="2">Good</span><span data-m="3">Strong</span></div>
+  <div class="vialhit" id="vialhit" aria-hidden="true"></div>
+
+  <form class="form" id="form" novalidate autocomplete="on" aria-labelledby="h1">
+    <div class="intro">
+      <p class="kicker">Create your account</p>
+      <h1 id="h1">Make it strong.<br><em>Watch it fill.</em></h1>
+      <p class="sub">Your password brews in the vial as you type. Aim for the top.</p>
+    </div>
+    <div class="stage" id="stage" aria-hidden="true"></div>
+
+    <div class="f f-em">
+      <div class="lrow"><label for="em">Work email</label><span class="err" id="em-err"></span></div>
+      <div class="inp"><input id="em" name="email" type="email" inputmode="email" autocomplete="email" spellcheck="false" value="ana.costa@mail.pt" aria-describedby="em-err" required></div>
+    </div>
+
+    <div class="f f-pw">
+      <div class="lrow"><label for="pw">Password</label><span class="caps" id="caps" hidden>Caps Lock is on</span></div>
+      <div class="inp pwinp">
+        <input id="pw" name="new-password" type="password" autocomplete="new-password" spellcheck="false" autocapitalize="off" aria-describedby="meter pw-err reqs-sr" required>
+        <button type="button" class="show" id="show" aria-pressed="false" aria-controls="pw">Show</button>
+      </div>
+    </div>
+
+    <div class="meter" id="meter" role="meter" aria-labelledby="meter-l" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-valuetext="Empty">
+      <span id="meter-l">Strength</span><span class="err" id="pw-err"></span><b id="lvl">Empty</b>
+    </div>
+    <ul class="reqs" id="reqs" aria-label="Password requirements">
+      <li data-r="len"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="7.25"/><path d="M4.6 8.3l2.2 2.2 4.6-4.7"/></svg><span>12+ characters</span><span class="sr st"> (not yet)</span></li>
+      <li data-r="case"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="7.25"/><path d="M4.6 8.3l2.2 2.2 4.6-4.7"/></svg><span>Upper &amp; lower case</span><span class="sr st"> (not yet)</span></li>
+      <li data-r="num"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="7.25"/><path d="M4.6 8.3l2.2 2.2 4.6-4.7"/></svg><span>A number</span><span class="sr st"> (not yet)</span></li>
+      <li data-r="sym"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="7.25"/><path d="M4.6 8.3l2.2 2.2 4.6-4.7"/></svg><span>A symbol</span><span class="sr st"> (not yet)</span></li>
+    </ul>
+    <p class="sr" id="reqs-sr">Use 12 or more characters with upper and lower case, a number and a symbol.</p>
+
+    <div class="cta">
+      <button class="go" id="go" type="submit"><span class="spin" aria-hidden="true"></span><svg class="tick" viewBox="0 0 20 20" aria-hidden="true"><path d="M4.5 10.5l3.6 3.4 7.4-8"/></svg><span class="lbl" id="go-lbl">Create account</span></button>
+      <button class="again" id="again" type="button" hidden>Start over</button>
+    </div>
+    <p class="fine" id="fine">Demo form · nothing is sent or stored</p>
+    <p class="status" id="status" role="status" aria-live="polite"></p>
+    <p class="sr" id="announce" aria-live="polite"></p>
+  </form>
+</main>
+
+<footer class="cap" id="cap"><b>28 · Vial strength</b><span>A password meter that fills a glass vial</span><i>The liquid rises and shifts from ruby to emerald as it gets stronger.</i></footer>
+<div class="brandmark" aria-hidden="true">Code with Ulvi</div>
+<script type="module" src="js/app.js"></script>
+</body>
+</html>
